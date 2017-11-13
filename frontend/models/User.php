@@ -285,5 +285,16 @@ class User extends ActiveRecord implements IdentityInterface
                         ->asArray()
                         ->all();
     }
+    
+    /**
+     * Get profile picture
+     * @return string
+     */
+    public function getPicture()
+    {
+        if ($this->picture) {
+            return Yii::$app->storage->getFile($this->picture);
+        }
+    }
 
 }
