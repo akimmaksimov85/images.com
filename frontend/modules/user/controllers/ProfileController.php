@@ -6,6 +6,7 @@ use Yii;
 use frontend\models\User;
 use frontend\modules\user\models\forms\PictureForm;
 use yii\web\UploadedFile;
+use yii\web\Response;
 
 class ProfileController extends \yii\web\Controller
 {
@@ -29,6 +30,8 @@ class ProfileController extends \yii\web\Controller
      */
     public function actionUploadPicture()
     {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        
         $model = new PictureForm();
         $model->picture = UploadedFile::getInstance($model, 'picture');
 
@@ -38,10 +41,13 @@ class ProfileController extends \yii\web\Controller
             $user->picture = Yii::$app->storage->saveUploadedFile($model->picture);
             
             if ($user->save(false, ['picture'])) {
-                print_r($user->attributes); die;
+                return [
+                    'success' => true,
+                    'pictureUri' => Yii::$app->storage->getFile($user->picture),
+                ];
             }
         }
-
+        return ['success' => false, 'errors' => $model->getErrors()];
     }
 
     /**
