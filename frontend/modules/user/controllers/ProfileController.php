@@ -15,12 +15,14 @@ class ProfileController extends \yii\web\Controller
     {
         /* @var $currentUser User */
         $currentUser = Yii::$app->user->identity;
-
+        $user = $this->findUser($nickname);
+        $postItems = $user->getPost();
         $modelPicture = new PictureForm();
 
         return $this->render('view', [
-                    'user' => $this->findUser($nickname),
+                    'user' => $user,
                     'currentUser' => $currentUser,
+                    'postItems' => $postItems,
                     'modelPicture' => $modelPicture,
         ]);
     }
@@ -31,15 +33,15 @@ class ProfileController extends \yii\web\Controller
     public function actionUploadPicture()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
-        
+
         $model = new PictureForm();
         $model->picture = UploadedFile::getInstance($model, 'picture');
 
         if ($model->validate()) {
-            
+
             $user = Yii::$app->user->identity;
             $user->picture = Yii::$app->storage->saveUploadedFile($model->picture);
-            
+
             if ($user->save(false, ['picture'])) {
                 return [
                     'success' => true,

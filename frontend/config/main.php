@@ -13,6 +13,22 @@ return [
         'user' => [
             'class' => 'frontend\modules\user\Module',
         ],
+        'post' => [
+            'class' => 'frontend\modules\post\Module',
+        ],
+        'comments' => [
+            'class' => 'rmrevin\yii\module\Comments\Module',
+            'userIdentityClass' => 'frontend\models\User',
+            'useRbac' => false,
+            'modelMap' => [
+                'Comment' => [
+                    'class' => 'frontend\models\User',
+                    'on ' . \yii\db\ActiveRecord::EVENT_AFTER_INSERT => function() {
+
+                    },
+                ],
+            ],
+        ]
     ],
     'components' => [
         'request' => [
@@ -44,10 +60,14 @@ return [
             'showScriptName' => false,
             'rules' => [
                 'profile/<nickname:\w+>' => 'user/profile/view',
+                'post/<id:\d+>' => 'post/default/view',
             ],
         ],
         'storage' => [
             'class' => 'frontend\components\Storage',
+        ],
+        'feedService' => [
+            'class' => 'frontend\components\FeedService',
         ],
     ],
     'params' => $params,
