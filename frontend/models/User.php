@@ -7,7 +7,6 @@ use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
-use rmrevin\yii\module\Comments\interfaces\CommentatorInterface;
 use frontend\models\Post;
 
 /**
@@ -28,7 +27,7 @@ use frontend\models\Post;
  * @property string $picture
  * @property string $password write-only password
  */
-class User extends ActiveRecord implements IdentityInterface, CommentatorInterface
+class User extends ActiveRecord implements IdentityInterface
 {
 
     const STATUS_DELETED = 0;
@@ -300,20 +299,6 @@ class User extends ActiveRecord implements IdentityInterface, CommentatorInterfa
         return self::DEFAULT_IMAGE;
     }
 
-    public function getCommentatorAvatar()
-    {
-        return $this->picture;
-    }
-
-    public function getCommentatorName()
-    {
-        return $this->username;
-    }
-
-    public function getCommentatorUrl()
-    {
-        return ['/user/profile/view', 'nickname' => $this->getNickname()]; // or false, if user does not have a public page
-    }
 
     /**
      * Get data from newsfeed
@@ -328,21 +313,56 @@ class User extends ActiveRecord implements IdentityInterface, CommentatorInterfa
                         ->limit($limit)
                         ->all();
     }
-    
+
     public function likesPost(int $postId)
     {
         /* @var $redis Connection */
         $redis = Yii::$app->redis;
         return (bool) $redis->sismember("user:{$this->getId()}:likes", $postId);
     }
-        
+
+    /**
+     * 
+     * @return integer
+     */
     public function getPost()
     {
         $order = ['created_at' => SORT_DESC];
         return $this->hasMany(Post::className(), ['user_id' => 'id'])
-                ->where(['user_id' => $this->id])
-                ->orderBy($order)
-                ->all();
-        
+                        ->where(['user_id' => $this->id])
+                        ->orderBy($order)
+                        ->all();
     }
+
+    /**
+     * Get post count
+     * @return integer
+     */
+    public function getPostCount()
+    {
+        return $this->hasMany(Post::className(), ['user_id' => 'id'])->count();
+    }
+
+    /**
+     * Get post count
+     * @return object
+     */
+    public function getPosts()
+    {
+        $order = ['created_at' => SORT_DESC];
+        return $this->hasMany(Post::className(), ['user_id' => 'id'])
+                        ->orderBy($order)
+                        ->all();
+    }
+    
+    public function getAvatar()
+    {
+        return $this->getPicture();
+    }
+    
+    public function getAuthorName()
+    {
+        return $this->getNickname();
+    }
+
 }

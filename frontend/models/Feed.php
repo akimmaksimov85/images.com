@@ -3,6 +3,8 @@
 namespace frontend\models;
 
 use Yii;
+use frontend\models\User;
+use rmrevin\yii\module\Comments\models\Comment;
 
 /**
  * This is the model class for table "feed".
@@ -60,6 +62,22 @@ class Feed extends \yii\db\ActiveRecord
     public function getPostId()
     {
         return $this->post_id;
+    }
+    
+        public function countComments()
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        return $redis->scard("post:{$this->post_id}:comments");
+    }
+    
+    public function getAuthorPicture()
+    {
+        $user = $this->hasOne(User::className(), ['id' => 'author_id'])->one();
+        if ($user->picture) {
+            return Yii::$app->storage->getFile($user->picture);
+        }
+        return $this->author_picture;
     }
     
 }

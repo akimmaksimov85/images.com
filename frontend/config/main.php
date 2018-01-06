@@ -16,19 +16,10 @@ return [
         'post' => [
             'class' => 'frontend\modules\post\Module',
         ],
-        'comments' => [
-            'class' => 'rmrevin\yii\module\Comments\Module',
-            'userIdentityClass' => 'frontend\models\User',
-            'useRbac' => false,
-            'modelMap' => [
-                'Comment' => [
-                    'class' => 'frontend\models\User',
-                    'on ' . \yii\db\ActiveRecord::EVENT_AFTER_INSERT => function() {
-
-                    },
-                ],
-            ],
-        ]
+        'comment' => [
+            'class' => 'yii2mod\comments\Module',
+            
+        ],
     ],
     'components' => [
         'request' => [
@@ -59,6 +50,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '/' => 'site/index',
                 'profile/<nickname:\w+>' => 'user/profile/view',
                 'post/<id:\d+>' => 'post/default/view',
             ],
@@ -68,6 +60,15 @@ return [
         ],
         'feedService' => [
             'class' => 'frontend\components\FeedService',
+        ],
+        'i18n' => [
+            'translations' => [
+                'yii2mod.comments' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@yii2mod/comments/messages',
+                ],
+            // ...
+            ],
         ],
     ],
     'params' => $params,

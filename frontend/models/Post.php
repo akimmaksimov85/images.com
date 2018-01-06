@@ -7,6 +7,7 @@ use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
 use rmrevin\yii\module\Comments\models\Comment;
 
+
 /**
  * This is the model class for table "post".
  *
@@ -118,6 +119,16 @@ class Post extends ActiveRecord
         return $redis->sismember("post:{$this->getId()}:likes", $user->getId());
     }
 
+    private function getCountComments()
+    {
+        return Comment::find()->byEntity($this->id)->count();
+    }
     
-
+    public function CountComments()
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        $redis->sadd("post:{$this->getId()}:comments", $this->getCountComments());
+    }
+    
 }
