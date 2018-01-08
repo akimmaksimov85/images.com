@@ -18,7 +18,6 @@ return [
         ],
         'comment' => [
             'class' => 'yii2mod\comments\Module',
-            
         ],
     ],
     'components' => [

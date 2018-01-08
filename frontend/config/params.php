@@ -9,6 +9,10 @@ return [
         'maxWidth' => 1024,
         'maxHeight' => 768,
     ],
+    'profilePicture' => [
+        'maxWidth' => 100,
+        'maxHeight' => 100,
+    ],
     'feedPostLimit' => 200,
     'comment' => [
         'maxLevel' => 3,

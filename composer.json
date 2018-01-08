@@ -27,18 +27,20 @@
         "bower-asset/jquery": "1.12.4",
         "bower-asset/bootstrap": "3.3.5",
         "bower-asset/font-awesome": "4.4.0",
-        "yii2mod/yii2-comments": "*"
+        "yii2mod/yii2-comments": "*",
+
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
         "yiisoft/yii2-gii": "~2.0.0",
 
         "codeception/base": "^2.2.3",
-        "codeception/verify": "~0.3.1"
+        "codeception/verify": "~0.3.1",
+        "predis/predis": "^1.1"
     },
     "config": {
         "process-timeout": 1800,
-        "fxp-asset":{
+        "fxp-asset": {
             "installer-paths": {
                 "npm-asset-library": "vendor/npm",
                 "bower-asset-library": "vendor/bower"

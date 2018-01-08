@@ -107,17 +107,6 @@ FontAwesomeAsset::register($this);
 <?php $this->endPage() ?>
 
 
-<?php
-//    NavBar::begin([
-//        'brandLabel' => 'My Company',
-//        'brandUrl' => Yii::$app->homeUrl,
-//        'options' => [
-//            'class' => 'navbar-inverse navbar-fixed-top',
-//        ],
-//    ]);
-//    NavBar::end();
-?>
-
 
 
 

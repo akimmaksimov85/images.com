@@ -5,7 +5,7 @@ namespace frontend\models;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
-use rmrevin\yii\module\Comments\models\Comment;
+use frontend\models\Comment;
 
 
 /**
@@ -117,18 +117,6 @@ class Post extends ActiveRecord
         /* @var $redis Connection */
         $redis = Yii::$app->redis;
         return $redis->sismember("post:{$this->getId()}:likes", $user->getId());
-    }
-
-    private function getCountComments()
-    {
-        return Comment::find()->byEntity($this->id)->count();
-    }
-    
-    public function CountComments()
-    {
-        /* @var $redis Connection */
-        $redis = Yii::$app->redis;
-        $redis->sadd("post:{$this->getId()}:comments", $this->getCountComments());
     }
     
 }

@@ -4,7 +4,7 @@ namespace frontend\models;
 
 use Yii;
 use frontend\models\User;
-use rmrevin\yii\module\Comments\models\Comment;
+use yii2mod\comments\models\CommentModel;
 
 /**
  * This is the model class for table "feed".
@@ -22,6 +22,7 @@ use rmrevin\yii\module\Comments\models\Comment;
  */
 class Feed extends \yii\db\ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -29,7 +30,7 @@ class Feed extends \yii\db\ActiveRecord
     {
         return 'feed';
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -48,7 +49,7 @@ class Feed extends \yii\db\ActiveRecord
             'post_created_at' => 'Post Created At',
         ];
     }
-    
+
     /**
      * @return mixed
      */
@@ -58,19 +59,12 @@ class Feed extends \yii\db\ActiveRecord
         $redis = Yii::$app->redis;
         return $redis->scard("post:{$this->post_id}:likes");
     }
-    
+
     public function getPostId()
     {
         return $this->post_id;
     }
-    
-        public function countComments()
-    {
-        /* @var $redis Connection */
-        $redis = Yii::$app->redis;
-        return $redis->scard("post:{$this->post_id}:comments");
-    }
-    
+
     public function getAuthorPicture()
     {
         $user = $this->hasOne(User::className(), ['id' => 'author_id'])->one();
@@ -79,5 +73,12 @@ class Feed extends \yii\db\ActiveRecord
         }
         return $this->author_picture;
     }
-    
+
+    public function commentsCount()
+    {
+        return $this->hasMany(CommentModel::className(), ['entityId' => 'post_id'])
+        ->where(['entityId' => $this->getPostId()])
+        ->count();
+    }
+
 }

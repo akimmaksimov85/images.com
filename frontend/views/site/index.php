@@ -55,7 +55,7 @@ $this->title = 'Newsfeed';
                                         </a>
                                     </div>
                                     <div class="post-comments">
-                                        Comments: <span class="likes-count"><?php echo $feedItem->countComments(); ?></span>
+                                        Comments: <span class="likes-count"><?php echo $feedItem->commentsCount(); ?></span>
                                     </div>
                                     <div class="post-date">
                                         <span><?php echo Yii::$app->formatter->asDatetime($feedItem->post_created_at); ?></span>    

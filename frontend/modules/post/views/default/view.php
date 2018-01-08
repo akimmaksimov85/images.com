@@ -55,33 +55,7 @@ use yii\web\JqueryAsset;
                         </article>
                         <!-- feed item -->
 
-
-                        <div class="col-sm-12 col-xs-12">
-                            <h4>5 comments</h4>
-                            <div class="comments-post">
-
-                                <div class="single-item-title"></div>
-                                <div class="row">
-                                    <ul class="comment-list">
-
-                                        <!-- comment item -->
-                                        <li class="comment">
-                                            <div class="comment-user-image">
-                                                <img src="img/demo/avatar.jpg">
-                                            </div>
-                                            <div class="comment-info">
-                                                <h4 class="author"><a href="#">Firstname Lastname</a> <span>(April 10, 2017)</span></h4>
-                                                <p>Lorem ipsum dolor sit amet, iisque bonorum consequat an vis, ea dico sonet dolorum eam!</p>
-                                            </div>
-                                        </li>
-                                        <!-- comment item -->
-                                    </ul>
-                                </div>
-
-                            </div>
-                            <!-- comments-post -->
-                        </div>
-
+                        <!-- comments-post -->
                         <div class="col-sm-12 col-xs-12">
                             <div class="comment-respond">
                                 <h4>Leave a Reply</h4>
@@ -102,9 +76,6 @@ use yii\web\JqueryAsset;
                                 ?>
                             </div>
                         </div>
-
-
-
                     </div>
                 </div>
             </div>

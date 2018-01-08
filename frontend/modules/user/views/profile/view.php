@@ -9,6 +9,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
 use dosamigos\fileupload\FileUpload;
+use yii\widgets\ActiveForm;
 
 $this->title = Html::encode($user->username);
 ?>
@@ -50,7 +51,17 @@ $this->title = Html::encode($user->username);
                                     ],
                                 ]);
                                 ?>
-                                <a href="#" class="btn btn-default">Edit profile</a>
+                                <style>#form-container {display: none}</style>
+                                <a href="#form-container" class="btn btn-default" id="trigger">Edit profile</a>
+                                <div id="form-container">
+                                    <?php $form = ActiveForm::begin(['action' => '/user/profile/edit']); ?>
+                                    <?php echo $form->field($user, 'about')->textInput(); ?>
+                                    <?php echo Html::submitButton('Edit', ['class' => 'btn btn-success']); ?>
+                                    <?php ActiveForm::end(); ?>
+                                </div>
+
+
+
                             <?php endif; ?>
 
                             <br/>
@@ -61,8 +72,11 @@ $this->title = Html::encode($user->username);
                         </div>
 
                         <?php if ($currentUser && !$currentUser->equals($user)): ?>
-                            <a href="<?php echo Url::to(['/user/profile/unsubscribe', 'id' => $user->getId()]); ?>" class="btn btn-info">Unsubscribe</a>
-                            <a href="<?php echo Url::to(['/user/profile/subscribe', 'id' => $user->getId()]); ?>" class="btn btn-info">Subscribe</a>
+                            <?php if ($currentUser->isFollowing($user)): ?>
+                                <a href="<?php echo Url::to(['/user/profile/unsubscribe', 'id' => $user->getId()]); ?>" class="btn btn-info">Unsubscribe</a>
+                            <?php else: ?>
+                                <a href="<?php echo Url::to(['/user/profile/subscribe', 'id' => $user->getId()]); ?>" class="btn btn-info">Subscribe</a>
+                            <?php endif; ?>
                             <hr>
                             <h5>Friends, who are also following <?php echo Html::encode($user->username); ?>: </h5>
                             <div class="row">
@@ -172,3 +186,8 @@ $this->title = Html::encode($user->username);
     </div>
 </div>
 <!-- Modal followers -->
+<script>
+    document.getElementById('trigger').onclick = function () {
+        document.getElementById('form-container').style.display = 'block';
+    }
+</script>
