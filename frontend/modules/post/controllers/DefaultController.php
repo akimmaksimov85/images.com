@@ -9,6 +9,8 @@ use yii\web\UploadedFile;
 use frontend\models\Post;
 use frontend\modules\post\models\forms\PostForm;
 
+use yii2mod\comments\models\CommentModel;
+
 
 /**
  * Default controller for the `post` module
@@ -18,6 +20,10 @@ class DefaultController extends Controller
 
     public function actionCreate()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/user/default/login']);
+        }
+
         $model = new PostForm(Yii::$app->user->identity);
 
         if ($model->load(Yii::$app->request->post())) {
@@ -45,6 +51,7 @@ class DefaultController extends Controller
     {
         /* @var $currentUser User */
         $currentUser = Yii::$app->user->identity;
+
 
         return $this->render('view', [
                     'post' => $this->findPost($id),

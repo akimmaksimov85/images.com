@@ -8,6 +8,11 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
+use rmrevin\yii\module\Comments\interfaces\CommentatorInterface;
+
+use frontend\models\Post;
+
+
 /**
  * User model
  *
@@ -26,7 +31,7 @@ use yii\web\IdentityInterface;
  * @property string $picture
  * @property string $password write-only password
  */
-class User extends ActiveRecord implements IdentityInterface
+class User extends ActiveRecord implements IdentityInterface, CommentatorInterface
 {
 
     const STATUS_DELETED = 0;
@@ -214,7 +219,6 @@ class User extends ActiveRecord implements IdentityInterface
         $redis = Yii::$app->redis;
         $redis->sadd("user:{$this->getId()}:subscriptions", $user->getId());
         $redis->sadd("user:{$user->getId()}:followers", $this->getId());
-        
     }
 
     public function unfollowUser($user)
@@ -226,14 +230,14 @@ class User extends ActiveRecord implements IdentityInterface
         $redis->srem("user:{$this->getId()}:subscriptions", $user->getId());
         $redis->srem("user:{$user->getId()}:followers", $this->getId());
     }
-    
+
     public function isFollowing($user)
     {
-         /**
+        /**
          * @var $redis Connection
          */
         $redis = Yii::$app->redis;
-        
+
         return (bool) $redis->sismember("user:{$this->getId()}:subscriptions", $user->getId());
     }
 
@@ -286,7 +290,7 @@ class User extends ActiveRecord implements IdentityInterface
                         ->asArray()
                         ->all();
     }
-    
+
     /**
      * Get profile picture
      * @return string
@@ -297,6 +301,87 @@ class User extends ActiveRecord implements IdentityInterface
             return Yii::$app->storage->getFile($this->picture);
         }
         return self::DEFAULT_IMAGE;
+    }
+    
+    public function getCommentatorAvatar()
+    {
+//        return $this->avatar_url;
+    }
+    
+    public function getCommentatorName()
+    {
+        return $this->username;
+    }
+    
+    public function getCommentatorUrl()
+    {
+        return ['/user/profile/view', 'nickname' => $this->getNickname()]; // or false, if user does not have a public page
+    }
+
+
+    /**
+     * Get data from newsfeed
+     * @param integer $limit
+     * @return array
+     */
+    public function getFeed(int $limit)
+    {
+        $order = ['post_created_at' => SORT_DESC];
+        return $this->hasMany(Feed::className(), ['user_id' => 'id'])
+                        ->orderBy($order)
+                        ->limit($limit)
+                        ->all();
+    }
+
+    public function likesPost(int $postId)
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        return (bool) $redis->sismember("user:{$this->getId()}:likes", $postId);
+    }
+
+    /**
+     * 
+     * @return integer
+     */
+    public function getPost()
+    {
+        $order = ['created_at' => SORT_DESC];
+        return $this->hasMany(Post::className(), ['user_id' => 'id'])
+                        ->where(['user_id' => $this->id])
+                        ->orderBy($order)
+                        ->all();
+    }
+
+    /**
+     * Get post count
+     * @return integer
+     */
+    public function getPostCount()
+    {
+        return $this->hasMany(Post::className(), ['user_id' => 'id'])->count();
+    }
+
+    /**
+     * Get post count
+     * @return object
+     */
+    public function getPosts()
+    {
+        $order = ['created_at' => SORT_DESC];
+        return $this->hasMany(Post::className(), ['user_id' => 'id'])
+                        ->orderBy($order)
+                        ->all();
+    }
+    
+    public function getAvatar()
+    {
+        return $this->getPicture();
+    }
+    
+    public function getAuthorName()
+    {
+        return $this->getNickname();
     }
 
 }
