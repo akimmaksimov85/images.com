@@ -19,13 +19,7 @@ $this->title = Html::encode($user->username);
         <div class="page page-post col-sm-12 col-xs-12 post-82">
 
 
-
-<img src="<?php echo $user->getPicture(); ?>" id="profile-picture" />
-    
-<?php if ($currentUser && $currentUser->equals($user)): ?>
-
             <div class="blog-posts blog-posts-large">
-
 
                 <div class="row">
 
@@ -54,35 +48,6 @@ $this->title = Html::encode($user->username);
                     $("#profile-image-success").hide();
                 }
             }',
-
-
-        ],
-    ]); ?>
-    <hr/>
-
-<?php else: ?>
-
-    <br><br>
-    
-    <?php if ($currentUser && $currentUser->isFollowing($user)): ?>
-    <a href="<?php echo Url::to(['/user/profile/unsubscribe', 'id' => $user->getId()]); ?>" class="btn btn-info">Unsubscribe</a>
-    <?php else: ?>
-    <a href="<?php echo Url::to(['/user/profile/subscribe', 'id' => $user->getId()]); ?>" class="btn btn-info">Subscribe</a>
-    <?php endif; ?>
-
-    <hr>
-
-    <?php if ($currentUser): ?>
-        <h5>Friends, who are also following <?php echo Html::encode($user->username); ?>: </h5>
-        <div class="row">
-            <?php foreach ($currentUser->getMutualSubscriptionsTo($user) as $item): ?>
-                <div class="col-md-12">
-                    <a href="<?php echo Url::to(['/user/profile/view', 'nickname' => ($item['nickname']) ? $item['nickname'] : $item['id']]); ?>">
-                        <?php echo Html::encode($item['username']); ?>
-                    </a>
-                </div>                
-            <?php endforeach; ?>
-
                                     ],
                                 ]);
                                 ?>
@@ -158,7 +123,6 @@ $this->title = Html::encode($user->username);
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
@@ -222,9 +186,8 @@ $this->title = Html::encode($user->username);
     </div>
 </div>
 <!-- Modal followers -->
-
 <script>
     document.getElementById('trigger').onclick = function () {
         document.getElementById('form-container').style.display = 'block';
-    };
+    }
 </script>

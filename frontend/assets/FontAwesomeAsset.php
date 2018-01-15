@@ -1,3 +1,4 @@
+
 <?php
 
 namespace frontend\assets;
@@ -14,3 +15,4 @@ class FontAwesomeAsset extends AssetBundle
     ];
 
 }
+

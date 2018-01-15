@@ -1,3 +1,4 @@
+
 <?php
 
 namespace frontend\models;
@@ -7,11 +8,7 @@ use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
-
-use rmrevin\yii\module\Comments\interfaces\CommentatorInterface;
-
 use frontend\models\Post;
-
 
 /**
  * User model
@@ -31,7 +28,7 @@ use frontend\models\Post;
  * @property string $picture
  * @property string $password write-only password
  */
-class User extends ActiveRecord implements IdentityInterface, CommentatorInterface
+class User extends ActiveRecord implements IdentityInterface
 {
 
     const STATUS_DELETED = 0;
@@ -302,22 +299,6 @@ class User extends ActiveRecord implements IdentityInterface, CommentatorInterfa
         }
         return self::DEFAULT_IMAGE;
     }
-    
-    public function getCommentatorAvatar()
-    {
-//        return $this->avatar_url;
-    }
-    
-    public function getCommentatorName()
-    {
-        return $this->username;
-    }
-    
-    public function getCommentatorUrl()
-    {
-        return ['/user/profile/view', 'nickname' => $this->getNickname()]; // or false, if user does not have a public page
-    }
-
 
     /**
      * Get data from newsfeed
@@ -373,12 +354,12 @@ class User extends ActiveRecord implements IdentityInterface, CommentatorInterfa
                         ->orderBy($order)
                         ->all();
     }
-    
+
     public function getAvatar()
     {
         return $this->getPicture();
     }
-    
+
     public function getAuthorName()
     {
         return $this->getNickname();

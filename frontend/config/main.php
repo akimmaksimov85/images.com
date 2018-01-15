@@ -1,3 +1,4 @@
+
 <?php
 
 $params = array_merge(
@@ -19,7 +20,6 @@ return [
         'comment' => [
             'class' => 'yii2mod\comments\Module',
         ],
-
     ],
     'components' => [
         'request' => [
@@ -51,6 +51,7 @@ return [
             'showScriptName' => false,
             'rules' => [
                 '/' => 'site/index',
+                '/about' => 'site/about',
                 'profile/<nickname:\w+>' => 'user/profile/view',
                 'post/<id:\d+>' => 'post/default/view',
             ],
@@ -73,3 +74,4 @@ return [
     ],
     'params' => $params,
 ];
+

@@ -51,18 +51,16 @@ class ProfileController extends \yii\web\Controller
         }
         return ['success' => false, 'errors' => $model->getErrors()];
     }
-    
+
     public function actionEdit()
     {
         $currentUser = Yii::$app->user->identity;
         $post = Yii::$app->request->post();
         $currentUser->about = $post['User']['about'];
         $currentUser->save();
-        
+
         return $this->redirect(['/user/profile/view', 'nickname' => $currentUser->getNickname()]);
     }
-    
-    
 
     /**
      * 

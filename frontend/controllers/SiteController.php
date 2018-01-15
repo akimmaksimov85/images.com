@@ -1,3 +1,4 @@
+
 <?php
 
 namespace frontend\controllers;
@@ -45,6 +46,11 @@ class SiteController extends Controller
                     'feedItems' => $feedItems,
                     'currentUser' => $currentUser,
         ]);
+    }
+    
+    public function actionAbout()
+    {
+        return $this->render('about');
     }
 
 }

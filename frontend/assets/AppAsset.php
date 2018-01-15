@@ -1,3 +1,4 @@
+
 <?php
 
 namespace frontend\assets;
@@ -23,3 +24,4 @@ class AppAsset extends AssetBundle
         'yii\bootstrap\BootstrapPluginAsset',
     ];
 }
+

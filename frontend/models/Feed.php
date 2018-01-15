@@ -1,3 +1,4 @@
+
 <?php
 
 namespace frontend\models;
@@ -77,8 +78,8 @@ class Feed extends \yii\db\ActiveRecord
     public function commentsCount()
     {
         return $this->hasMany(CommentModel::className(), ['entityId' => 'post_id'])
-        ->where(['entityId' => $this->getPostId()])
-        ->count();
+                        ->where(['entityId' => $this->getPostId()])
+                        ->count();
     }
 
 }

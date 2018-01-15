@@ -1,10 +1,10 @@
 $(document).ready(function () {
-    $('a.button-like').click(function () { 
+    $('a.button-like').click(function () {
         var button = $(this);
         var params = {
             'id': $(this).attr('data-id')
-        };        
-        $.post('/post/default/like', params, function(data) {
+        };
+        $.post('/post/default/like', params, function (data) {
             if (data.success) {
                 button.hide();
                 button.siblings('.button-unlike').show();
@@ -14,12 +14,12 @@ $(document).ready(function () {
         return false;
     });
 
-    $('a.button-unlike').click(function () { 
+    $('a.button-unlike').click(function () {
         var button = $(this);
         var params = {
             'id': $(this).attr('data-id')
-        };        
-        $.post('/post/default/unlike', params, function(data) {
+        };
+        $.post('/post/default/unlike', params, function (data) {
             if (data.success) {
                 button.hide();
                 button.siblings('.button-like').show();

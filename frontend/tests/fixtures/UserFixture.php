@@ -1,3 +1,4 @@
+
 <?php
 
 namespace frontend\tests\fixtures;
@@ -11,3 +12,4 @@ class UserFixture extends ActiveFixture
         'frontend\tests\fixtures\PostFixture',
     ];
 }
+

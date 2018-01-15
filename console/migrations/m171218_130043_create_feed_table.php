@@ -34,3 +34,4 @@ class m171218_130043_create_feed_table extends Migration
         $this->dropTable('feed');
     }
 }
+

@@ -1,3 +1,4 @@
+
 <?php
 
 namespace frontend\modules\post\controllers;
@@ -8,9 +9,7 @@ use yii\web\Response;
 use yii\web\UploadedFile;
 use frontend\models\Post;
 use frontend\modules\post\models\forms\PostForm;
-
 use yii2mod\comments\models\CommentModel;
-
 
 /**
  * Default controller for the `post` module
@@ -51,7 +50,6 @@ class DefaultController extends Controller
     {
         /* @var $currentUser User */
         $currentUser = Yii::$app->user->identity;
-
 
         return $this->render('view', [
                     'post' => $this->findPost($id),
