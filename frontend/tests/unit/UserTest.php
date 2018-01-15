@@ -63,5 +63,18 @@ class UserTest extends \Codeception\Test\Unit
         $this->tester->sendCommandToRedis('del', 'user:1:followers');
         $this->tester->sendCommandToRedis('del', 'user:3:subscriptions');
     }
+    
+    public function testUnfollowUser()
+    {
+        $user1 = $this->tester->grabFixture('users', 'user1');
+        $user3 = $this->tester->grabFixture('users', 'user3');
+        
+        $user3->followUser($user1);
+        $user3->unFollowUser($user1);
+        
+        $this->tester->dontSeeInRedis('user:1:followers', 3);
+        $this->tester->dontSeeInRedis('user:3:subscriptions', 1);
+
+    }
 
 }
