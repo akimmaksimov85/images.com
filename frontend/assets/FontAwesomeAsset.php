@@ -1,4 +1,3 @@
-
 <?php
 
 namespace frontend\assets;
@@ -9,10 +8,8 @@ class FontAwesomeAsset extends AssetBundle
 {
 
     public $sourcePath = '@bower/font-awesome';
-    
     public $css = [
         'css/font-awesome.css',
     ];
 
 }
-

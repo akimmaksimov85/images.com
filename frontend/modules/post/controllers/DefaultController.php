@@ -1,4 +1,3 @@
-
 <?php
 
 namespace frontend\modules\post\controllers;

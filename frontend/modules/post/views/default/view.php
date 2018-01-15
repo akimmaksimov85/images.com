@@ -1,5 +1,4 @@
-
-`<?php
+<?php
 /* frontend\modules\post\views\default\view */
 /* @var $this yii\web\View */
 /* @var $post frontend\models\Post */

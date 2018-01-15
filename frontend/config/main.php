@@ -1,4 +1,3 @@
-
 <?php
 
 $params = array_merge(
