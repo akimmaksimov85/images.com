@@ -1,17 +1,19 @@
 <?php
+
 namespace backend\controllers;
 
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use common\models\LoginForm;
+use backend\models\LoginForm;
 
 /**
  * Site controller
  */
 class SiteController extends Controller
 {
+
     /**
      * @inheritdoc
      */
@@ -79,7 +81,7 @@ class SiteController extends Controller
             return $this->goBack();
         } else {
             return $this->render('login', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -95,4 +97,5 @@ class SiteController extends Controller
 
         return $this->goHome();
     }
+
 }

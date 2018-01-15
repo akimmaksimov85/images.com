@@ -3,7 +3,6 @@
 return [
     'adminEmail' => 'admin@example.com',
     'maxFileSize' => 1024 * 1024 * 2, // 2 megabites
-    'storagePath' => '@frontend/web/uploads/',
     'storageUri' => '/uploads/', //http://images.com/uploads/f1/d7/4ferg4f3f3g34g3.jpg
     'postPicture' => [
         'maxWidth' => 1024,

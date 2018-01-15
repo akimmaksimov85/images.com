@@ -80,5 +80,12 @@ class Feed extends \yii\db\ActiveRecord
                         ->where(['entityId' => $this->getPostId()])
                         ->count();
     }
+    
+    public function isReported(User $user)
+    {
+        /* @var redis connection */
+        $redis = Yii::$app->redis;
+        return $redis->sismember("post:{$this->post_id}:complaints", $user->getId());
+    }
 
 }
