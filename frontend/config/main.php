@@ -7,7 +7,13 @@ $params = array_merge(
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'language' => 'ru-RU',
+    'bootstrap' => [
+        'log',
+        [
+            'class' => 'frontend\components\LanguageSelector',
+        ],
+    ],
     'controllerNamespace' => 'frontend\controllers',
     'modules' => [
         'user' => [
@@ -58,8 +64,11 @@ return [
         'feedService' => [
             'class' => 'frontend\components\FeedService',
         ],
-        'i18n' => [
+        'i18n' => [//internationalization
             'translations' => [
+                '*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                ],
                 'yii2mod.comments' => [
                     'class' => 'yii\i18n\PhpMessageSource',
                     'basePath' => '@yii2mod/comments/messages',

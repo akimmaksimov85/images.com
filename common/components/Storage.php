@@ -3,7 +3,7 @@
 namespace common\components;
 
 use Yii;
-use frontend\components\StorageInterface;
+use common\components\StorageInterface;
 use yii\base\Component;
 use yii\web\UploadedFile;
 use yii\helpers\FileHelper;

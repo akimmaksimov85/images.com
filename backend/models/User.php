@@ -3,6 +3,7 @@
 namespace backend\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -21,12 +22,17 @@ use yii\web\IdentityInterface;
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
+ * @property string $picture
  */
 class User extends ActiveRecord implements IdentityInterface
 {
 
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
+    const ROLE_ADMIN = 'admin';
+    const ROLE_MODERATOR = 'moderator';
+    
+    public $roles;
 
     /**
      * @inheritdoc
@@ -54,7 +60,45 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            ['roles', 'safe'],
         ];
+    }
+    
+    public function __construct()
+    {
+        $this->on(self::EVENT_AFTER_UPDATE, [$this, 'saveRoles']);
+    }
+    
+    
+    public function saveRoles()
+    {
+        Yii::$app->authManager->revokeAll($this->getId());
+        
+        if (is_array($this->roles)) {
+            foreach ($this->roles as $roleName) {
+                if ($role = Yii::$app->authManager->getRole($roleName)) {
+                    Yii::$app->authManager->assign($role, $this->getId());
+                }
+            }
+        }
+    }
+    
+    /**
+     * Populate roles attribute with data from RBAC after record loaded from DB
+     */
+    public function afterFind()
+    {
+        $this->roles = $this->getRoles();
+    }
+    
+    /**
+     * Get user roles from RBAC
+     * @return array
+     */
+    public function getRoles()
+    {
+        $roles = Yii::$app->authManager->getRolesByUser($this->getId());
+        return ArrayHelper::getColumn($roles, 'name', false);
     }
 
     /**
@@ -187,5 +231,28 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+
+    /**
+     * @return string
+     */
+    public function getImage()
+    {
+        if ($this->picture) {
+            return Yii::$app->storage->getFile($this->picture);
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function getRolesDropdown()
+    {
+        return [
+            self::ROLE_ADMIN => 'Admin',
+            self::ROLE_MODERATOR => 'Moderator',
+        ];
+    }
+    
+    
 
 }
