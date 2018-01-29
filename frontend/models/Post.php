@@ -3,9 +3,10 @@
 namespace frontend\models;
 
 use Yii;
+use frontend\models\Feed;
 use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
-use frontend\models\Comment;
+use frontend\models\events\PostDeletedEvent;
 
 /**
  * This is the model class for table "post".
@@ -91,6 +92,10 @@ class Post extends ActiveRecord
         $redis->srem("user:{$user->getId()}:likes", $this->getId());
     }
 
+    /**
+     * get post id
+     * @return int
+     */
     public function getId()
     {
         return $this->id;
@@ -117,18 +122,42 @@ class Post extends ActiveRecord
         $redis = Yii::$app->redis;
         return $redis->sismember("post:{$this->getId()}:likes", $user->getId());
     }
-    
+
     public function complain(User $user)
     {
         /* @var redis connection */
         $redis = Yii::$app->redis;
         $key = "post:{$this->getId()}:complaints";
-        
+
         if (!$redis->sismember($key, $user->getId())) {
             $redis->sadd($key, $user->getId());
             $this->complaints++;
             return $this->save(false, ['complaints']);
         }
     }
+
+    public function deletePost()
+    {
+        $id = $this->getId();
+        
+        /* deleted first slash */
+        $filename = mb_substr($this->getImage(), 1);
+
+        if ($this->delete()) {
+
+            $event = new PostDeletedEvent();
+            $event->postId = $id;
+            $event->postFilename = $filename;
+
+            $this->on(self::EVENT_AFTER_DELETE, [Feed::className(), 'deletePosts']);
+            $this->on(self::EVENT_AFTER_DELETE, [Yii::$app->storage, 'deleteFile']);
+            $this->trigger(self::EVENT_AFTER_DELETE, $event);
+            return true;
+
+            
+        }
+        return false;
+    }
+
 
 }

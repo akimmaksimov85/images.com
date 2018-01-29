@@ -5,6 +5,7 @@ namespace frontend\models;
 use Yii;
 use frontend\models\User;
 use yii2mod\comments\models\CommentModel;
+use frontend\models\events\PostDeletedEvent;
 
 /**
  * This is the model class for table "feed".
@@ -80,12 +81,20 @@ class Feed extends \yii\db\ActiveRecord
                         ->where(['entityId' => $this->getPostId()])
                         ->count();
     }
-    
+
     public function isReported(User $user)
     {
         /* @var redis connection */
         $redis = Yii::$app->redis;
         return $redis->sismember("post:{$this->post_id}:complaints", $user->getId());
+    }
+
+    public static function deletePosts($event)
+    {
+        $posts = Feed::find()->where('post_id = ' . $event->getPostId())->all();
+        foreach ($posts as $post) {
+            $post->delete();
+        }
     }
 
 }

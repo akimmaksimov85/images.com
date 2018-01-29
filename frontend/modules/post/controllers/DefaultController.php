@@ -56,6 +56,19 @@ class DefaultController extends Controller
         ]);
     }
 
+    public function actionDelete($id)
+    {
+        $post = Post::findOne($id);
+        if ($post->deletePost()) {
+            Yii::$app->session->setFlash('success', 'Post deleted.');
+        }
+        
+        return $this->redirect([
+                    '/user/profile/view',
+                    'nickname' => Yii::$app->user->identity->getNickname()
+        ]);
+    }
+
     public function actionLike()
     {
         if (Yii::$app->user->isGuest) {
