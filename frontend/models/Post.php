@@ -135,21 +135,42 @@ class Post extends ActiveRecord
             return $this->save(false, ['complaints']);
         }
     }
+    
+    protected function deleteComplaints($event)
+    {
+        /* @var redis connection */
+        $redis = Yii::$app->redis;
+        $key = "post:{$event->getPostId()}:complaints";
+        
+        return $redis->del($key);
+    }
+    
+    protected function deleteLikes($event)
+    {
+        /* @var redis connection */
+        $redis = Yii::$app->redis;
+        $key = "post:{$event->getPostId()}:likes";
+        
+        return $redis->del($key);
+    }
 
+    
     public function deletePost()
     {
         $id = $this->getId();
         
         /* deleted first slash */
-        $filename = mb_substr($this->getImage(), 1);
+//        $filename = mb_substr(, 0);
 
         if ($this->delete()) {
 
             $event = new PostDeletedEvent();
             $event->postId = $id;
-            $event->postFilename = $filename;
+            $event->postFilename = $this->getImage();
 
             $this->on(self::EVENT_AFTER_DELETE, [Feed::className(), 'deletePosts']);
+            $this->on(self::EVENT_AFTER_DELETE, [$this, 'deleteComplaints']);
+            $this->on(self::EVENT_AFTER_DELETE, [$this, 'deleteLikes']);
             $this->on(self::EVENT_AFTER_DELETE, [Yii::$app->storage, 'deleteFile']);
             $this->trigger(self::EVENT_AFTER_DELETE, $event);
             return true;

@@ -95,6 +95,9 @@ class Feed extends \yii\db\ActiveRecord
         foreach ($posts as $post) {
             $post->delete();
         }
+        
+        /* @var redis connection */
+
     }
 
 }

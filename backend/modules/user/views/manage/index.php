@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
                 'value' => function ($user) {
                     /* @var $post \backend\models\User */
-                    return Html::img($user->getImage(), ['width' => '50px']);
+                    return Html::a(Html::img($user->getImage(), ['width' => '50px']), ['view', 'id' => $user->id]);
                 }
             ],
             'username',
@@ -35,7 +35,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 return implode(', ', $user->getRoles());
                 }
             ],
-            ['class' => 'yii\grid\ActionColumn'],
         ],
     ]);
     ?>

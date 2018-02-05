@@ -8,12 +8,17 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+
+use backend\modules\complaints\controllers\behaviors\ComplaintsAccessBehavior;
+            
 
 /**
  * ManageController implements the CRUD actions for Post model.
  */
 class ManageController extends Controller
 {
+
     /**
      * @inheritdoc
      */
@@ -26,6 +31,22 @@ class ManageController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'view'],
+                        'roles' => ['admin', 'moderator'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['delete', 'update'],
+                        'roles' => ['admin'],
+                    ],
+                ],
+            ],
+            ComplaintsAccessBehavior::className(),
         ];
     }
 
@@ -35,12 +56,13 @@ class ManageController extends Controller
      */
     public function actionIndex()
     {
+
         $dataProvider = new ActiveDataProvider([
             'query' => Post::findComplaints(),
         ]);
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -52,7 +74,7 @@ class ManageController extends Controller
     public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+                    'model' => $this->findModel($id),
         ]);
     }
 
@@ -64,11 +86,13 @@ class ManageController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $post = \frontend\models\Post::findOne($id);
+        if ($post->deletePost()) {
+            Yii::$app->session->setFlash('success', 'Post deleted.');
+        }
         return $this->redirect(['index']);
     }
-    
+
     /**
      * Approve post action, if it looks ok
      * @param integer $id
@@ -98,5 +122,5 @@ class ManageController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-    
+
 }

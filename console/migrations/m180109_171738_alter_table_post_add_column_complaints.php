@@ -13,7 +13,7 @@ class m180109_171738_alter_table_post_add_column_complaints extends Migration
 
     public function down()
     {
-        $this->addColumn('{{$post}}', 'complaints');
+        $this->dropColumn('{{%post}}', 'complaints');
     }
 
 }

@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
                 'value' => function ($post) {
                     /* @var $post \backend\models\Post */
-                    return Html::img($post->getImage(), ['width' => '130px']);
+                    return Html::a(Html::img($post->getImage(), ['width' => '130px']), ['view', 'id' => $post->id]);
                 }
             ],
             'description:ntext',

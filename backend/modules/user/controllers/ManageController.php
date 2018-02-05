@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use backend\modules\user\controllers\behaviors\UserAccessBehavior;
 
 /**
  * ManageController implements the CRUD actions for User model.
@@ -43,6 +44,7 @@ class ManageController extends Controller
                     ],
                 ],
             ],
+            UserAccessBehavior::className(),
         ];
     }
 
@@ -52,9 +54,6 @@ class ManageController extends Controller
      */
     public function actionIndex()
     {
-        if (!Yii::$app->user->can('viewUsersList')) {
-            return $this->goHome();
-        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => User::find(),
@@ -95,7 +94,7 @@ class ManageController extends Controller
             ]);
         }
     }
-
+    
     /**
      * Deletes an existing User model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
