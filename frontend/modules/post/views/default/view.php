@@ -51,16 +51,18 @@ use yii\web\JqueryAsset;
                                     <span><?php echo Yii::$app->formatter->asDatetime($post->created_at); ?></span>    
                                 </div>
                                 &nbsp;&nbsp;
-                                <?php if ($post->user->getId() == $currentUser->getId()): ?>
-                                    <?=
-                                    Html::a('Delete', ['/post/default/delete', 'id' => $post->getId()], [
-                                        'class' => 'btn btn-default',
-                                        'data' => [
-                                            'confirm' => 'Are you sure you want to delete this item?',
-                                            'method' => 'post',
-                                        ],
-                                    ])
-                                    ?>
+                                <?php if ($post->user): ?>
+                                    <?php if ($post->user->getId() == $currentUser->getId()): ?>
+                                        <?=
+                                        Html::a('Delete', ['/post/default/delete', 'id' => $post->getId()], [
+                                            'class' => 'btn btn-default',
+                                            'data' => [
+                                                'confirm' => 'Are you sure you want to delete this item?',
+                                                'method' => 'post',
+                                            ],
+                                        ])
+                                        ?>
+                                    <?php endif; ?>
                                 <?php endif; ?>
                                 <br><br>
                             </div>

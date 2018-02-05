@@ -68,10 +68,14 @@ class Feed extends \yii\db\ActiveRecord
 
     public function getAuthorPicture()
     {
+        if (!isset($user)) {
+            return User::DEFAULT_IMAGE;
+        }
         $user = $this->hasOne(User::className(), ['id' => 'author_id'])->one();
         if ($user->picture) {
             return Yii::$app->storage->getFile($user->picture);
         }
+        
         return $this->author_picture;
     }
 

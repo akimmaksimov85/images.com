@@ -25,14 +25,21 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Html::a(Html::img($user->getImage(), ['width' => '50px']), ['view', 'id' => $user->id]);
                 }
             ],
-            'username',
+            [
+                'attribute' => 'username',
+                'format' => 'raw',
+                'value' => function ($user) {
+                    /* @var $post \backend\models\User */
+                    return Html::a($user->getNickname(), ['view', 'id' => $user->id]);
+                }
+            ],
             'email:email',
             'created_at:datetime',
             [
                 'attribute' => 'roles',
                 'value' => function ($user) {
                     /* @var $user User */
-                return implode(', ', $user->getRoles());
+                    return implode(', ', $user->getRoles());
                 }
             ],
         ],

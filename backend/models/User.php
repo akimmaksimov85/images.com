@@ -31,7 +31,7 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_ACTIVE = 10;
     const ROLE_ADMIN = 'admin';
     const ROLE_MODERATOR = 'moderator';
-    
+
     public $roles;
 
     /**
@@ -63,18 +63,17 @@ class User extends ActiveRecord implements IdentityInterface
             ['roles', 'safe'],
         ];
     }
-    
+
     public function __construct($config = [])
     {
         $this->on(self::EVENT_AFTER_UPDATE, [$this, 'saveRoles']);
         return parent::__construct($config);
     }
-    
-    
+
     public function saveRoles()
     {
         Yii::$app->authManager->revokeAll($this->getId());
-        
+
         if (is_array($this->roles)) {
             foreach ($this->roles as $roleName) {
                 if ($role = Yii::$app->authManager->getRole($roleName)) {
@@ -83,7 +82,7 @@ class User extends ActiveRecord implements IdentityInterface
             }
         }
     }
-    
+
     /**
      * Populate roles attribute with data from RBAC after record loaded from DB
      */
@@ -91,7 +90,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->roles = $this->getRoles();
     }
-    
+
     /**
      * Get user roles from RBAC
      * @return array
@@ -253,7 +252,14 @@ class User extends ActiveRecord implements IdentityInterface
             self::ROLE_MODERATOR => 'Moderator',
         ];
     }
-    
-    
+
+    /**
+     * 
+     * @return mixed
+     */
+    public function getNickname()
+    {
+        return ($this->nickname) ? $this->nickname : $this->getId();
+    }
 
 }
