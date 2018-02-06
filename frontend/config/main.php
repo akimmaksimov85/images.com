@@ -25,6 +25,9 @@ return [
         'comment' => [
             'class' => 'yii2mod\comments\Module',
         ],
+        'search' => [
+            'class' => 'frontend\modules\search\Module',
+        ],
     ],
     'components' => [
         'request' => [

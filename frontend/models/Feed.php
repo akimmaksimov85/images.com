@@ -77,7 +77,7 @@ class Feed extends \yii\db\ActiveRecord
             return Yii::$app->storage->getFile($user->picture);
         }
 
-        return $this->author_picture;
+        return $this->author_picture;   
     }
 
     public function commentsCount()
