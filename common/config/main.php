@@ -12,5 +12,8 @@ return [
         'storage' => [
             'class' => 'common\components\Storage',
         ],
+        'deleteLikesAndComplaints' => [
+            'class' => 'common\components\DeleteLikesAndComplaints',
+        ],
     ],
 ];

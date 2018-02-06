@@ -50,4 +50,7 @@ return [
         ],
     ],
     'params' => $params,
+    'aliases' => [
+        '@uploads' => '/var/www/project/frontend/web/uploads',
+    ],
 ];

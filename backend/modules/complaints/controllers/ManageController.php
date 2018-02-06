@@ -86,7 +86,7 @@ class ManageController extends Controller
      */
     public function actionDelete($id)
     {
-        $post = \frontend\models\Post::findOne($id);
+        $post = Post::findOne($id);
         if ($post->deletePost()) {
             Yii::$app->session->setFlash('success', 'Post deleted.');
         }

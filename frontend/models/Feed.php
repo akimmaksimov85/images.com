@@ -5,7 +5,6 @@ namespace frontend\models;
 use Yii;
 use frontend\models\User;
 use yii2mod\comments\models\CommentModel;
-use frontend\models\events\PostDeletedEvent;
 
 /**
  * This is the model class for table "feed".
@@ -68,14 +67,16 @@ class Feed extends \yii\db\ActiveRecord
 
     public function getAuthorPicture()
     {
+        $user = $this->hasOne(User::className(), ['id' => 'author_id'])->one();
+
         if (!isset($user)) {
             return User::DEFAULT_IMAGE;
         }
-        $user = $this->hasOne(User::className(), ['id' => 'author_id'])->one();
+
         if ($user->picture) {
             return Yii::$app->storage->getFile($user->picture);
         }
-        
+
         return $this->author_picture;
     }
 
@@ -91,17 +92,6 @@ class Feed extends \yii\db\ActiveRecord
         /* @var redis connection */
         $redis = Yii::$app->redis;
         return $redis->sismember("post:{$this->post_id}:complaints", $user->getId());
-    }
-
-    public static function deletePosts($event)
-    {
-        $posts = Feed::find()->where('post_id = ' . $event->getPostId())->all();
-        foreach ($posts as $post) {
-            $post->delete();
-        }
-        
-        /* @var redis connection */
-
     }
 
 }

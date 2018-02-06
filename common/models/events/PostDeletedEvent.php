@@ -1,9 +1,8 @@
 <?php
 
-namespace frontend\models\events;
+namespace common\models\events;
 
 use yii\base\Event;
-use frontend\models\Post;
 
 class PostDeletedEvent extends Event
 {

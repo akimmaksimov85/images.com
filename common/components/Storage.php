@@ -83,10 +83,12 @@ class Storage extends Component implements StorageInterface
      */
     public function deleteFile($event)
     {
+    
         $file = $event->getPostFilename();
 
         if (file_exists($file)) {
             unlink($file);
+            die('удалилось');
         }
 
         return false;
