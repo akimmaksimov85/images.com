@@ -57,7 +57,7 @@ $this->title = Html::encode($user->username);
                                 <div id="form-container">
                                     <?php $form = ActiveForm::begin(['action' => '/user/profile/edit']); ?>
                                     <?php echo $form->field($user, 'about')->textInput(); ?>
-                                    <?php echo Html::submitButton('Edit', ['class' => 'btn btn-success']); ?>
+                                    <?php echo Html::submitButton(Yii::t('profile', 'Edit'), ['class' => 'btn btn-success']); ?>
                                     <?php ActiveForm::end(); ?>
                                 </div>
 

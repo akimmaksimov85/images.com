@@ -22,9 +22,7 @@ use yii\web\JqueryAsset;
                         <div class="col-lg-3">
                             <?php $user = User::findOne(['id' => $friend['id']]); ?>
                             <div class="profile-title">
-                                <?php if ($friend['picture']): ?>
-                                    <img src="<?php echo $user->getPicture(); ?>" id="profile-picture" class="author-image" />
-                                <?php endif; ?>
+                                <img src="<?php echo $user->getPicture(); ?>" id="profile-picture" class="author-image" />
                                 <div class="author-name">
                                     <a href="<?php echo Url::to(['/user/profile/view', 'nickname' => $user->getNickname()]); ?>">
                                         <?php echo Html::encode($user->username); ?>

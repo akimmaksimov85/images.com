@@ -8,4 +8,5 @@ return [
     'followers' => 'Подписчиков',
     'posts' => 'постов',
     'Friends, who are also following' => 'Общие друзья с ',
+    'Edit' => 'Редактировать',
 ];

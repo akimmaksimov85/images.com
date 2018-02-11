@@ -26,7 +26,7 @@ class SearchUser
 
     public static function recommendedFriends()
     {
-        $sql = "SELECT * FROM user ORDER BY created_at LIMIT 4";
+        $sql = "SELECT * FROM user ORDER BY created_at  LIMIT 4";
         return Yii::$app->db->createCommand($sql)->queryAll();
     }
 
