@@ -4,6 +4,7 @@ namespace frontend\modules\search\controllers;
 
 use Yii;
 use yii\web\Controller;
+use frontend\modules\search\models\SearchUser;
 use frontend\modules\search\models\forms\SearchForm;
 
 /**
@@ -21,6 +22,7 @@ class DefaultController extends Controller
         $currentUser = Yii::$app->user->identity;
         
         $results = null;
+        $friends = SearchUser::recommendedFriends();
         
         if ($model->load(Yii::$app->request->post())) {
             $results = $model->search();
@@ -30,6 +32,7 @@ class DefaultController extends Controller
             'model' => $model,
             'results' => $results,
             'currentUser' => $currentUser,
+            'friends' => $friends,
         ]);
     }
 }

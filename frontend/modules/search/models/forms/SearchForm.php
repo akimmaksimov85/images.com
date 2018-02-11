@@ -26,7 +26,8 @@ class SearchForm extends Model
     {
         if ($this->validate()) {
             $model = new SearchUser();
-            return $model->advancedSearch($this->keyword);
+            return $model->simpleSearch($this->keyword);
         }
     }
+ 
 }
