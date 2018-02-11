@@ -10,6 +10,7 @@ use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
 use dosamigos\fileupload\FileUpload;
 use yii\widgets\ActiveForm;
+use yii\web\JqueryAsset;
 
 $this->title = Html::encode($user->username);
 ?>
@@ -52,7 +53,7 @@ $this->title = Html::encode($user->username);
                                 ]);
                                 ?>
                                 <style>#form-container {display: none}</style>
-                                <a href="#form-container" class="btn btn-default" id="trigger">Edit profile</a>
+                                <a href="#form-container" class="btn btn-default" id="trigger"><?= Yii::t('profile', 'Edit profile'); ?></a>
                                 <div id="form-container">
                                     <?php $form = ActiveForm::begin(['action' => '/user/profile/edit']); ?>
                                     <?php echo $form->field($user, 'about')->textInput(); ?>
@@ -72,13 +73,14 @@ $this->title = Html::encode($user->username);
                         </div>
 
                         <?php if ($currentUser && !$currentUser->equals($user)): ?>
-                            <?php if ($currentUser->isFollowing($user)): ?>
-                                <a href="<?php echo Url::to(['/user/profile/unsubscribe', 'id' => $user->getId()]); ?>" class="btn btn-info">Unsubscribe</a>
-                            <?php else: ?>
-                                <a href="<?php echo Url::to(['/user/profile/subscribe', 'id' => $user->getId()]); ?>" class="btn btn-info">Subscribe</a>
-                            <?php endif; ?>
+                            <a href="#" class="btn btn-info button-unsubscribe <?php echo ($currentUser->isFollowing($user)) ? "" : "display-none"; ?>" data-id="<?php echo $user->getId(); ?>">
+                                <?= Yii::t('profile', 'Unsubscribe'); ?>
+                            </a>
+                            <a href="#" class="btn btn-info button-subscribe <?php echo ($currentUser->isFollowing($user)) ? "display-none" : ""; ?>" data-id="<?php echo $user->getId(); ?>">
+                                <?= Yii::t('profile', 'Subscribe'); ?>
+                            </a>
                             <hr>
-                            <h5>Friends, who are also following <?php echo Html::encode($user->username); ?>: </h5>
+                            <h5><?= Yii::t('profile', 'Friends, who are also following'); ?> <?php echo Html::encode($user->username); ?>: </h5>
                             <div class="row">
                                 <?php foreach ($currentUser->getMutualSubscriptionsTo($user) as $item): ?>
                                     <div class="col-md-12">
@@ -99,13 +101,13 @@ $this->title = Html::encode($user->username);
 
                         <div class="profile-bottom">
                             <div class="profile-post-count">
-                                <span><?php echo $currentUser->getPostCount(); ?> posts</span>
+                                <span><?php echo $currentUser->getPostCount(); ?> <?= Yii::t('profile', 'posts'); ?></span>
                             </div>
                             <div class="profile-followers">
-                                <a href="#" data-toggle="modal" data-target="#myModal1"><?php echo $user->countSubscriptions(); ?> following</a>
+                                <a href="#" data-toggle="modal" data-target="#myModal1"><?php echo $user->countSubscriptions(); ?> <?= Yii::t('profile', 'following'); ?></a>
                             </div>
                             <div class="profile-following">
-                                <a href="#" data-toggle="modal" data-target="#myModal2"><?php echo $user->countFollowers(); ?> followers</a>    
+                                <a href="#" data-toggle="modal" data-target="#myModal2"><?php echo $user->countFollowers(); ?> <?= Yii::t('profile', 'followers'); ?></a>    
                             </div>
                         </div>
 
@@ -191,3 +193,8 @@ $this->title = Html::encode($user->username);
         document.getElementById('form-container').style.display = 'block';
     }
 </script>
+
+<?php
+$this->registerJsFile('@web/js/subscription.js', [
+    'depends' => JqueryAsset::className(),
+]);

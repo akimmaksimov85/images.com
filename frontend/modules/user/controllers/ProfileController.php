@@ -76,40 +76,42 @@ class ProfileController extends \yii\web\Controller
         throw new \yii\web\NotFoundHttpException;
     }
 
-    public function actionSubscribe($id)
+    public function actionSubscribe()
     {
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['/user/default/login']); //если гость, перенаправить на login
         }
 
-        /**
-         * @var $currentUser User
-         */
-        $currentUser = Yii::$app->user->identity; //юзер, который хочет подписаться
+        Yii::$app->response->format = Response::FORMAT_JSON;
 
+        $id = Yii::$app->request->post('id');
+        $currentUser = Yii::$app->user->identity; //юзер, который хочет подписаться
         $user = $this->findUserById($id); //юзер, на которого хотят подписаться
 
         $currentUser->followUser($user);
 
-        return $this->redirect(['/user/profile/view', 'nickname' => $user->getNickname()]);
+        return [
+            'success' => true,
+        ];
     }
 
-    public function actionUnsubscribe($id)
+    public function actionUnsubscribe()
     {
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['/user/default/login']); //если гость, перенаправить на login
         }
 
-        /**
-         * @var $currentUser User
-         */
-        $currentUser = Yii::$app->user->identity; //юзер, который хочет отписаться
+        Yii::$app->response->format = Response::FORMAT_JSON;
 
+        $id = Yii::$app->request->post('id');
+        $currentUser = Yii::$app->user->identity; //юзер, который хочет отписаться
         $user = $this->findUserById($id); //юзер, от которого хотят отписаться
 
         $currentUser->unfollowUser($user);
 
-        return $this->redirect(['/user/profile/view', 'nickname' => $user->getNickname()]);
+        return [
+            'success' => true,
+        ];
     }
 
     private function findUserById($id)

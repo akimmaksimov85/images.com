@@ -54,10 +54,10 @@ use yii\web\JqueryAsset;
                                 <?php if ($post->user): ?>
                                     <?php if ($post->user->getId() == $currentUser->getId()): ?>
                                         <?=
-                                        Html::a('Delete', ['/post/default/delete', 'id' => $post->getId()], [
+                                        Html::a(Yii::t('post', 'Delete'), ['/post/default/delete', 'id' => $post->getId()], [
                                             'class' => 'btn btn-default',
                                             'data' => [
-                                                'confirm' => 'Are you sure you want to delete this item?',
+                                                'confirm' => Yii::t('post', 'Are you sure you want to delete this item?'),
                                                 'method' => 'post',
                                             ],
                                         ])
@@ -72,11 +72,16 @@ use yii\web\JqueryAsset;
                         <!-- comments-post -->
                         <div class="col-sm-12 col-xs-12">
                             <div class="comment-respond">
-                                <h4>Leave a Reply</h4>
+                                <h4><?= Yii::t('post', 'Leave a Reply'); ?></h4>
                                 <?php
                                 echo \yii2mod\comments\widgets\Comment::widget([
                                     'model' => $post,
-                                    'relatedTo' => 'User ' . \Yii::$app->user->identity->username . ' commented on the page ' . \yii\helpers\Url::current(),
+                                    'relatedTo' =>
+                                    Yii::t('post', 'User') . ' ' .
+                                    \Yii::$app->user->identity->username .
+                                    Yii::t('post', 'commented on the page') . '' .
+                                    \yii\helpers\Url::current(),
+                                    
                                     'maxLevel' => \Yii::$app->params['comment']['maxLevel'],
                                     'dataProviderConfig' => [
                                         'pagination' => [
@@ -84,7 +89,7 @@ use yii\web\JqueryAsset;
                                         ],
                                     ],
                                     'listViewConfig' => [
-                                        'emptyText' => Yii::t('app', 'No comments found.'),
+                                        'emptyText' => Yii::t('post', 'No comments found.'),
                                     ],
                                 ]);
                                 ?>

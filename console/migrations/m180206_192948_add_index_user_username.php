@@ -7,7 +7,7 @@ class m180206_192948_add_index_user_username extends Migration
     public function safeUp()
     {
         $this->createIndex(
-            'idx-user-username',
+            'idx_user_username',
             'user',
             'username'
         );
@@ -16,7 +16,7 @@ class m180206_192948_add_index_user_username extends Migration
     public function safeDown()
     {
         $this->dropIndex(
-            'idx-user-username',
+            'idx_user_username',
             'user'
         );
     }

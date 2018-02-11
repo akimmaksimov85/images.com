@@ -42,12 +42,12 @@ FontAwesomeAsset::register($this);
                         <div class="col-md-4 col-sm-4 navicons-topbar">
                             <ul>
                                 <li class="blog-search">
-                                    <a href="#" title="Search"><i class="fa fa-search"></i></a>
+                                    <a href="<?php echo Url::to(['/search/default/index']); ?>" title="Search"><i class="fa fa-search"></i></a>
                                 </li>
                                 <li>
                                     <?= Html::beginForm(['/site/language']); ?>
-                                    <?= Html::dropDownList('language', Yii::$app->language, ['en-US' => 'English', 'ru-RU' => 'Русский']); ?>
-                                    <?= Html::submitButton('Change'); ?>
+                                    <?= Html::dropDownList('language', Yii::$app->language, ['en-US' => 'English', 'ru-RU' => 'Русский'], ['class' => 'btn btn-default']); ?>
+                                    <?= Html::submitButton(Yii::t('menu', 'Change'), ['class' => 'btn btn-default']); ?>
                                     <?= Html::endForm(); ?>
                                 </li>
                             </ul>
@@ -104,7 +104,7 @@ FontAwesomeAsset::register($this);
                 <div class="back-to-top-page">
                     <a class="back-to-top"><i class="fa fa-angle-double-up"></i></a>
                 </div>
-                <p class="text"><a href="<?php echo Url::to(['/site/about']); ?>">Images | 2017</a></p>
+                <p class="text"><a href="<?php echo Url::to(['/site/about']); ?>">Images | 2018</a></p>
             </div>
         </footer>
     </div>

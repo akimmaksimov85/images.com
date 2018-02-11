@@ -8,7 +8,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
 
-$this->title = 'Newsfeed';
+$this->title = Yii::t('newsfeed', 'Newsfeed');
 ?>
 
 
@@ -55,7 +55,7 @@ $this->title = 'Newsfeed';
                                         </a>
                                     </div>
                                     <div class="post-comments">
-                                        Comments: <span class="likes-count"><?php echo $feedItem->commentsCount(); ?></span>
+                                        <?= Yii::t('newsfeed', 'Comments'); ?>: <span class="likes-count"><?php echo $feedItem->commentsCount(); ?></span>
                                     </div>
                                     <div class="post-date">
                                         <span><?php echo Yii::$app->formatter->asDatetime($feedItem->post_created_at); ?></span>    
@@ -63,10 +63,10 @@ $this->title = 'Newsfeed';
                                     <div class="post-report">
                                         <?php if (!$feedItem->isReported($currentUser)): ?>
                                         <a href="#" class="btn btn-default button-complain" data-id="<?php echo $feedItem->post_id; ?>">
-                                            Report post <i class="fa fa-cog fa-spin fa-fw icon-preloader" style="display:none"></i>
+                                            <?= Yii::t('newsfeed', 'Report post'); ?> <i class="fa fa-cog fa-spin fa-fw icon-preloader" style="display:none"></i>
                                         </a>    
                                         <?php else: ?>
-                                        <p>Post has been reported</p>
+                                        <p><?= Yii::t('newsfeed', 'Post has been reported.'); ?></p>
                                         <?php endif; ?>
                                     </div>
                                 </div>
@@ -77,7 +77,7 @@ $this->title = 'Newsfeed';
 
                     <?php else: ?>
                         <div class="col-md-12">
-                            Nobody posted yet!
+                            <?= Yii::t('newsfeed', 'Nobody posted yet.'); ?>
                         </div>
                     <?php endif; ?>
 

@@ -13,7 +13,7 @@ use yii\helpers\Html;
                 <div class="blog-posts blog-posts-large">
                     <div class="row">
 
-                        <h1>Create post</h1>
+                        <h1><?= Yii::t('post', 'Create post'); ?></h1>
 
                         <?php $form = ActiveForm::begin(); ?>
 
@@ -21,7 +21,7 @@ use yii\helpers\Html;
 
                         <?php echo $form->field($model, 'description'); ?>
 
-                        <?php echo Html::submitButton('Create'); ?>
+                        <?php echo Html::submitButton('Create', ['class' => 'btn btn-default']); ?>
 
                             <?php ActiveForm::end(); ?>
 
