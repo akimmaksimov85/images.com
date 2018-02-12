@@ -10,9 +10,9 @@ $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode(Yii::t('login', $this->title)) ?></h1>
 
-    <p>Please fill out the following fields to login:</p>
+    <p><?= Yii::t('login', 'Please fill out the following fields to login'); ?>:</p>
 
     <div class="row">
         <div class="col-lg-5">
@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $form->field($model, 'rememberMe')->checkbox() ?>
 
             <div style="color:#999;margin:1em 0">
-                If you forgot your password you can <?= Html::a('reset it', ['/user/default/request-password-reset']) ?>.
+                <?= Yii::t('login', 'If you forgot your password you can'); ?> <?= Html::a(Yii::t('login', 'reset it').'.', ['/user/default/request-password-reset']) ?>.
             </div>
 
             <div class="form-group">
