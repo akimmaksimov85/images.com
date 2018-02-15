@@ -1,55 +1,23 @@
-Yii 2 Advanced Project Template
-===============================
+https://projectimages.tk/
+email: 1test@q.q
+password: 111111
 
-Yii 2 Advanced Project Template is a skeleton [Yii 2](http://www.yiiframework.com/) application best for
-developing complex Web applications with multiple tiers.
+https://admin.projectimages.tk/
+email: admin@admin.com
+password: 111111
 
-The template includes three tiers: front end, back end, and console, each of which
-is a separate Yii application.
+Цель ресурса - ведение фото-дневника онлайн, возможность дружить и заводить знакомства, делиться фотографиями и следить за новостями знакомых.
 
-The template is designed to work in a team development environment. It supports
-deploying the application in different environments.
+Основные возможности:
 
-Documentation is at [docs/guide/README.md](docs/guide/README.md).
-
-[![Latest Stable Version](https://poser.pugx.org/yiisoft/yii2-app-advanced/v/stable.png)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
-[![Total Downloads](https://poser.pugx.org/yiisoft/yii2-app-advanced/downloads.png)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
-[![Build Status](https://travis-ci.org/yiisoft/yii2-app-advanced.svg?branch=master)](https://travis-ci.org/yiisoft/yii2-app-advanced)
-
-DIRECTORY STRUCTURE
--------------------
-
-```
-common
-    config/              contains shared configurations
-    mail/                contains view files for e-mails
-    models/              contains model classes used in both backend and frontend
-    tests/               contains tests for common classes    
-console
-    config/              contains console configurations
-    controllers/         contains console controllers (commands)
-    migrations/          contains database migrations
-    models/              contains console-specific model classes
-    runtime/             contains files generated during runtime
-backend
-    assets/              contains application assets such as JavaScript and CSS
-    config/              contains backend configurations
-    controllers/         contains Web controller classes
-    models/              contains backend-specific model classes
-    runtime/             contains files generated during runtime
-    tests/               contains tests for backend application    
-    views/               contains view files for the Web application
-    web/                 contains the entry script and Web resources
-frontend
-    assets/              contains application assets such as JavaScript and CSS
-    config/              contains frontend configurations
-    controllers/         contains Web controller classes
-    models/              contains frontend-specific model classes
-    runtime/             contains files generated during runtime
-    tests/               contains tests for frontend application
-    views/               contains view files for the Web application
-    web/                 contains the entry script and Web resources
-    widgets/             contains frontend widgets
-vendor/                  contains dependent 3rd-party packages
-environments/            contains environment-based overrides
-```
+1. Наличие собственной страницы пользователя (профиля);
+2. Редактирование профиля: загрузка фотографии профиля (2amigos/yii2-file-upload-widget), 
+редактирование подписи профиля, просмотр постов профиля;
+3. Просмотр отдельного поста с возможностью ставить лайки (ajax, redis), комментировать (yii2mod/yii2-comments);
+4. Возможность заводить друзей, подписываться на других участников сети, видеть друзей своих друзей;
+5. Лента обновлений c возможностью ставить лайки, отсылать жалобу на пост;
+6. Регистрация на сайте. Возможность регистрироваться через Facebook (yiisoft/yii2-authclient);
+7. Страницы со списками подписок и подписчиков;
+8. Поиск по участникам сайта;
+9. Административная панель с возможностью удаления постов с жалобами, пользователей сайта;
+10. Интернационализация: английский и русский язык.
