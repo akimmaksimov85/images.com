@@ -143,7 +143,7 @@ class DefaultController extends Controller
         if ($post->complain($currentUser)) {
             return [
                 'success' => true,
-                'text' => 'Post reported',
+                'text' => Yii::t('newsfeed', 'Post reported.'),
             ];
         }
         return [
