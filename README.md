@@ -1,11 +1,3 @@
-https://projectimages.tk/
-email: 1test@q.q
-password: 111111
-
-https://admin.projectimages.tk/
-email: admin@admin.com
-password: 111111
-
 Цель ресурса - ведение фото-дневника онлайн, возможность дружить и заводить знакомства, делиться фотографиями и следить за новостями знакомых.
 
 Основные возможности:
